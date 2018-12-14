@@ -27,7 +27,7 @@ public Plugin myinfo =
 	name		= "Very Important Person",
 	description	= "If the VIP die or is infected, the round is over for humans.",
 	author		= "Nano",
-	version		= "1.0",
+	version		= "1.1",
 	url			= "http://steamcommunity.com/id/marianzet1"
 }
 
@@ -36,7 +36,7 @@ public void OnPluginStart()
 	cvarVipTimer = CreateConVar("zr_viptimer", "20.0", "Time until a vip is chosen");
 	cvarVipEnable = CreateConVar("zr_vipenable", "1", "Enable or disable the VIP function");
 	
-	RegConsoleCmd("sm_currentvip", Command_WhoisVip);
+	RegConsoleCmd("sm_currentvip", Command_CurrentVIP);
 	
 	RegAdminCmd("sm_vipmode", Command_Enable, ADMFLAG_BAN);
 
@@ -63,16 +63,16 @@ public Action Command_Enable(int client, int args)
 	}
 }
 
-public Action Command_WhoisVip(int client, int args)
+public Action Command_CurrentVIP(int client, int args)
 {
 	if (g_iVipClient == -1)
 	{
-		CPrintToChatAll("{green}[{lightgreen}VIPMode{green}]{default} There's no current VIP!");
+		CPrintToChat(client, "{green}[{lightgreen}VIPMode{green}]{default} There's no current VIP!");
 		return Plugin_Handled;
 	}
 	else
 	{
-		CPrintToChatAll("{green}[{lightgreen}VIPMode{green}]{default} Current VIP:{cyan} %N", g_iVipClient);
+		CPrintToChat(client, "{green}[{lightgreen}VIPMode{green}]{default} Current VIP:{cyan} %N", g_iVipClient);
 		return Plugin_Handled;
 	}
 }
